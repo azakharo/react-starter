@@ -20,6 +20,17 @@ class FeatureList extends React.Component {
       });
   }
 
+  remFeature(feature) {
+    console.log(`rem feature '${feature.name}'`);
+
+    fetch(`${BACKEND_URL}/api/things/${feature._id}`, {
+      method: "DELETE"
+    })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   render() {
     const {features} = this.state;
     if (!features) {
@@ -34,7 +45,8 @@ class FeatureList extends React.Component {
               <Panel>
                 <Panel.Body>
                   <span>{feature.name}</span>
-                  <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}>
+                  <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
+                          onClick={this.remFeature.bind(this, feature)}>
                     <span className={`fa fa-times`}></span>
                   </button>
                 </Panel.Body>
