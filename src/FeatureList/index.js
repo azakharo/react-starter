@@ -74,8 +74,23 @@ class FeatureList extends React.Component {
 
   addFeature() {
     const {newFeature} = this.state;
-    console.log(`add ${newFeature}`);
-    this.setState({newFeature: ""});
+
+    fetch(`${BACKEND_URL}/api/things`, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: newFeature
+      })
+    })
+      .then(() => {
+        this.setState({newFeature: ""});
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
 } // comp
