@@ -1,17 +1,16 @@
 import React from "react";
 import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import App from "./App"
-import FeatureList from './FeatureList'
+import FeatureList from "./FeatureList"
+import Auth from "./auth"
 
 
 class Routes extends React.PureComponent {
 
   render() {
-    const isAuthenticated = true;
-
     return (
       <div>
-        {isAuthenticated ? (
+        {Auth.isAuthenticated() ? (
           <Switch>
             <Route path="/main" component={App}/>
 
