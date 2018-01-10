@@ -1,11 +1,12 @@
 import React from "react";
-import {Panel} from "react-bootstrap"
+import {Button, Panel} from "react-bootstrap"
 import {BACKEND_URL} from "../settings"
 import style from "./style.css";
 
 class FeatureList extends React.Component {
 
   state = {
+    newFeature: "",
     features: null
   };
 
@@ -21,8 +22,6 @@ class FeatureList extends React.Component {
   }
 
   remFeature(feature) {
-    console.log(`rem feature '${feature.name}'`);
-
     fetch(`${BACKEND_URL}/api/things/${feature._id}`, {
       method: "DELETE"
     })
@@ -32,30 +31,51 @@ class FeatureList extends React.Component {
   }
 
   render() {
-    const {features} = this.state;
+    const {newFeature, features} = this.state;
     if (!features) {
       return null;
     }
 
     return (
-      <div className={style.featureList}>
-        {features.map((feature, featureInd) => {
-          return (
-            <div className={style.panelWrapper} key={`feature_${featureInd}`}>
-              <Panel>
-                <Panel.Body>
-                  <span>{feature.name}</span>
-                  <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
-                          onClick={this.remFeature.bind(this, feature)}>
-                    <span className={`fa fa-times`}></span>
-                  </button>
-                </Panel.Body>
-              </Panel>
-            </div>
-          );
-        })}
+      <div className={style.pageWrapper}>
+        {/*Feature list*/}
+        <div className={style.featureList}>
+          {features.map((feature, featureInd) => {
+            return (
+              <div className={style.panelWrapper} key={`feature_${featureInd}`}>
+                <Panel>
+                  <Panel.Body>
+                    <span>{feature.name}</span>
+                    <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
+                            onClick={this.remFeature.bind(this, feature)}>
+                      <span className={`fa fa-times`}></span>
+                    </button>
+                  </Panel.Body>
+                </Panel>
+              </div>
+            );
+          })}
+        </div>
+
+        {/*Add a new feature*/}
+        <div className={style.addNewFeatureSection}>
+          <input type="text" className={`form-control ${style.addFeatureInput}`}
+                 onChange={this.onNewFeatureInputChanged.bind(this)} value={newFeature}/>
+          <Button bsStyle="primary" onClick={this.addFeature.bind(this)}>Add</Button>
+        </div>
+
       </div>
     );
+  }
+
+  onNewFeatureInputChanged(e) {
+    this.setState({newFeature: e.target.value});
+  }
+
+  addFeature() {
+    const {newFeature} = this.state;
+    console.log(`add ${newFeature}`);
+    this.setState({newFeature: ""});
   }
 
 } // comp

@@ -1,8 +1,9 @@
-:local .featureList {
+:local .pageWrapper {
   background-color: aliceblue;
-
   padding: 1rem;
+}
 
+:local .featureList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -17,4 +18,17 @@
 :local .remFeatureBtn {
   margin-left: 1rem;
   border-radius: 50%;
+}
+
+:local .addNewFeatureSection {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+:local .addFeatureInput {
+  width: 40rem;
+  margin-right: 3px;
 }
