@@ -1,7 +1,10 @@
 import React from "react";
+import {withRouter} from "react-router-dom";
 import {Button, Panel} from "react-bootstrap"
 import RestApi from "../rest"
 import style from "./style.css";
+import Auth from "../auth";
+
 
 class FeatureList extends React.Component {
 
@@ -29,6 +32,8 @@ class FeatureList extends React.Component {
 
   render() {
     const {newFeature, features} = this.state;
+    const isAuthed = Auth.isAuthenticated();
+
     if (!features) {
       return null;
     }
@@ -59,6 +64,11 @@ class FeatureList extends React.Component {
           <input type="text" className={`form-control ${style.addFeatureInput}`}
                  onChange={this.onNewFeatureInputChanged.bind(this)} value={newFeature}/>
           <Button bsStyle="primary" onClick={this.addFeature.bind(this)}>Add</Button>
+
+          {isAuthed ?
+            <Button bsStyle="default" className={style.logoutBtn} onClick={this.logout.bind(this)}>Logout</Button>
+            : null}
+
         </div>
 
       </div>
@@ -81,6 +91,11 @@ class FeatureList extends React.Component {
       });
   }
 
+  logout() {
+    Auth.logout();
+    this.props.history.push("/login");
+  }
+
 } // comp
 
-export default FeatureList;
+export default withRouter(FeatureList);

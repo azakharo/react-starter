@@ -18,6 +18,10 @@ class Auth {
     });
   }
 
+  static logout() {
+    this.remToken();
+  }
+
   static getToken() {
     return localStorage.getItem('token');
   }
