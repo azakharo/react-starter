@@ -12,20 +12,7 @@ class RestApi {
   }
 
   static postFeature(feature) {
-    return new Promise((resolve, reject) => {
-      fetch(`${BACKEND_URL}/api/things`, {
-        method: "POST",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          name: feature
-        })
-      })
-        .then(() => resolve())
-        .catch(err => reject(err));
-    });
+    return this.post(`${BACKEND_URL}/api/things`, {name: feature});
   }
 
   static remFeature(feature) {
@@ -34,6 +21,21 @@ class RestApi {
         method: "DELETE"
       })
         .then(() => resolve())
+        .catch(err => reject(err));
+    });
+  }
+
+  static post(url, data) {
+    return new Promise((resolve, reject) => {
+      fetch(url, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then((resp) => resolve())
         .catch(err => reject(err));
     });
   }
