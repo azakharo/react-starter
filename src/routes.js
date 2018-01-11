@@ -1,7 +1,7 @@
 import React from "react";
 import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import App from "./App"
-import FeatureList from "./FeatureList"
+import LoginPage from "./LoginPage"
 import Auth from "./auth"
 
 
@@ -20,7 +20,7 @@ class Routes extends React.PureComponent {
           </Switch>
         ) : (
           <Switch>
-            <Route path="/login" component={FeatureList}/>
+            <Route path="/login" component={LoginPage}/>
 
             <Route>
               <Redirect to="/login"/>
