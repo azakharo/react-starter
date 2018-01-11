@@ -3,9 +3,13 @@ import {BACKEND_URL} from "./settings";
 
 class RestApi {
 
+  static axi = axios.create({
+    baseURL: BACKEND_URL
+  });
+
   static getFeatures() {
     return new Promise((resolve, reject) => {
-      axios(`${BACKEND_URL}/api/things`)
+      this.axi(`${BACKEND_URL}/api/things`)
         .then(resp => resolve(resp.data))
         .catch(err => reject(err));
     });
@@ -14,7 +18,7 @@ class RestApi {
   // Returns auth token on success
   static login(username, password) {
     return new Promise((resolve, reject) => {
-      axios.post(`${BACKEND_URL}/auth/local`, {
+      this.axi.post(`${BACKEND_URL}/auth/local`, {
         email: username,
         password: password
       })
@@ -24,26 +28,26 @@ class RestApi {
   }
 
   static postFeature(feature) {
-    return axios.post(`${BACKEND_URL}/api/things`, {name: feature});
+    return this.axi.post(`${BACKEND_URL}/api/things`, {name: feature});
   }
 
   static remFeature(feature) {
-    return axios.delete(`${BACKEND_URL}/api/things/${feature._id}`);
+    return this.axi.delete(`${BACKEND_URL}/api/things/${feature._id}`);
   }
 
   static setAuthHeader(val) {
-    axios.defaults.headers.common['Authorization'] = val;
+    this.axi.defaults.headers.common['Authorization'] = val;
   }
 
   static unsetAuthHeader(val) {
-    delete axios.defaults.headers.common['Authorization'];
+    delete this.axi.defaults.headers.common['Authorization'];
   }
 
   static unauthInterceptor = null;
 
   static setUnauthInterceptor(callback) {
     // Add a response interceptor
-    this.unauthInterceptor = axios.interceptors.response.use(
+    this.unauthInterceptor = this.axi.interceptors.response.use(
       response => {
         // Do something with response data
         return response;
@@ -59,7 +63,7 @@ class RestApi {
 
   static unsetUnauthInterceptor() {
     if (this.unauthInterceptor) {
-      axios.interceptors.response.eject(this.unauthInterceptor);
+      this.axi.interceptors.response.eject(this.unauthInterceptor);
       this.unauthInterceptor = null;
     }
   }
