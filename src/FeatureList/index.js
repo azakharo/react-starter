@@ -2,6 +2,7 @@ import React from "react";
 import {withRouter} from "react-router-dom";
 import {Button, Panel} from "react-bootstrap"
 import RestApi from "../rest"
+import {subscribeFeatures, unsubscribeFeatures} from "../sockets";
 import style from "./style.css";
 import Auth from "../auth";
 
@@ -17,17 +18,15 @@ class FeatureList extends React.Component {
     RestApi.getFeatures()
       .then(features => {
         this.setState({features});
+        subscribeFeatures(this.onFeatureSave.bind(this), this.onFeatureRemove.bind(this));
       })
       .catch(err => {
         console.log(err);
       });
   }
 
-  remFeature(feature) {
-    RestApi.remFeature(feature)
-      .catch(err => {
-        console.log(err);
-      });
+  componentWillUnmount() {
+    unsubscribeFeatures();
   }
 
   render() {
@@ -89,6 +88,23 @@ class FeatureList extends React.Component {
       .catch(err => {
         console.log(err);
       });
+  }
+
+  remFeature(feature) {
+    RestApi.remFeature(feature)
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  onFeatureSave(feature) {
+    console.log(`onFeatureSave: ${feature.name}`);
+    console.log(feature);
+  }
+
+  onFeatureRemove(feature) {
+    console.log(`onFeatureRemove: ${feature.name}`);
+    console.log(feature);
   }
 
   logout() {
