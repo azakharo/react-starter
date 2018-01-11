@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Panel} from "react-bootstrap"
-import {BACKEND_URL} from "../settings"
+import RestApi from "../rest"
 import style from "./style.css";
 
 class FeatureList extends React.Component {
@@ -11,8 +11,7 @@ class FeatureList extends React.Component {
   };
 
   componentDidMount() {
-    fetch(`${BACKEND_URL}/api/things`)
-      .then(resp => resp.json())
+    RestApi.getFeatures()
       .then(features => {
         this.setState({features});
       })
@@ -22,9 +21,7 @@ class FeatureList extends React.Component {
   }
 
   remFeature(feature) {
-    fetch(`${BACKEND_URL}/api/things/${feature._id}`, {
-      method: "DELETE"
-    })
+    RestApi.remFeature(feature)
       .catch(err => {
         console.log(err);
       });
@@ -75,16 +72,7 @@ class FeatureList extends React.Component {
   addFeature() {
     const {newFeature} = this.state;
 
-    fetch(`${BACKEND_URL}/api/things`, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: newFeature
-      })
-    })
+    RestApi.postFeature(newFeature)
       .then(() => {
         this.setState({newFeature: ""});
       })
