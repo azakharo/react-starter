@@ -11,6 +11,19 @@ class RestApi {
     });
   }
 
+  // Returns auth token on success
+  static login(username, password) {
+    return new Promise((resolve, reject) => {
+      this.post(`${BACKEND_URL}/auth/local`, {
+        email: username,
+        password: password
+      })
+        .then(resp => resp.json())
+        .then(data => resolve(data.token))
+        .catch(err => reject(err));
+    });
+  }
+
   static postFeature(feature) {
     return this.post(`${BACKEND_URL}/api/things`, {name: feature});
   }
@@ -35,7 +48,7 @@ class RestApi {
         },
         body: JSON.stringify(data)
       })
-        .then((resp) => resolve())
+        .then((resp) => resolve(resp))
         .catch(err => reject(err));
     });
   }

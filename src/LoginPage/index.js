@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import Auth from "../auth"
 import "./style.css";
 
 
@@ -25,6 +26,16 @@ export default class LoginPage extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    const {email, password} = this.state;
+
+    Auth.login(email, password)
+      .then(() => this.props.history.push("/main"))
+      .catch((err) => {
+        // wrong email and/or password?
+        // disp err msg
+        console.log(err);
+      });
   };
 
   render() {
