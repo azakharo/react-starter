@@ -4,7 +4,13 @@ import RestApi from "./rest"
 class Auth {
 
   static isAuthenticated() {
-    return localStorage.getItem('token') !== null;
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      RestApi.setAuthHeader(this.createAuthHeaderVal(token));
+    }
+
+    return token !== null;
   }
 
   static login(username, password) {
@@ -12,6 +18,7 @@ class Auth {
       RestApi.login(username, password)
         .then((token) => {
           this.saveToken(token);
+          RestApi.setAuthHeader(this.createAuthHeaderVal(token));
           resolve();
         })
         .catch(err => reject(err));
@@ -19,6 +26,7 @@ class Auth {
   }
 
   static logout() {
+    RestApi.unsetAuthHeader();
     this.remToken();
   }
 
@@ -37,6 +45,11 @@ class Auth {
   static remToken() {
     localStorage.removeItem('token');
   }
+
+  static createAuthHeaderVal(token) {
+    return `Bearer ${token}`;
+  }
+
 }
 
 export default Auth;

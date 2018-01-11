@@ -31,6 +31,14 @@ class RestApi {
     return axios.delete(`${BACKEND_URL}/api/things/${feature._id}`);
   }
 
+  static setAuthHeader(val) {
+    axios.defaults.headers.common['Authorization'] = val;
+  }
+
+  static unsetAuthHeader(val) {
+    delete axios.defaults.headers.common['Authorization'];
+  }
+
 }
 
 export default RestApi;
