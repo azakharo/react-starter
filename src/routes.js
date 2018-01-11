@@ -3,9 +3,22 @@ import {Redirect, Route, Switch, withRouter} from "react-router-dom";
 import App from "./App"
 import LoginPage from "./LoginPage"
 import Auth from "./auth"
+import RestApi from "./rest";
 
 
 class Routes extends React.PureComponent {
+
+  componentWillMount() {
+    RestApi.setUnauthInterceptor(this.onHttpStatus401.bind(this));
+  }
+
+  onHttpStatus401() {
+    this.props.history.push("/login");
+  }
+
+  componentWillUnmount() {
+    RestApi.unsetUnauthInterceptor();
+  }
 
   render() {
     return (

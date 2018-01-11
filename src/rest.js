@@ -39,6 +39,31 @@ class RestApi {
     delete axios.defaults.headers.common['Authorization'];
   }
 
+  static unauthInterceptor = null;
+
+  static setUnauthInterceptor(callback) {
+    // Add a response interceptor
+    this.unauthInterceptor = axios.interceptors.response.use(
+      response => {
+        // Do something with response data
+        return response;
+      },
+      error => {
+        // Do something with response error
+        if (error.response && error.response.status === 401) {
+          callback();
+        }
+        return Promise.reject(error);
+      });
+  }
+
+  static unsetUnauthInterceptor() {
+    if (this.unauthInterceptor) {
+      axios.interceptors.response.eject(this.unauthInterceptor);
+      this.unauthInterceptor = null;
+    }
+  }
+
 }
 
 export default RestApi;
