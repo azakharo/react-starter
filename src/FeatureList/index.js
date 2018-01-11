@@ -1,3 +1,4 @@
+import {remove, clone, findIndex} from "lodash";
 import React from "react";
 import {withRouter} from "react-router-dom";
 import {Button, Panel} from "react-bootstrap"
@@ -98,13 +99,21 @@ class FeatureList extends React.Component {
   }
 
   onFeatureSave(feature) {
-    console.log(`onFeatureSave: ${feature.name}`);
-    console.log(feature);
+    const features = clone(this.state.features);
+    const ind = findIndex(features, ['_id', feature._id]);
+    if (ind === -1) {
+      features.push(feature);
+    }
+    else {
+      features.splice(ind, 1, feature);
+    }
+    this.setState({features});
   }
 
   onFeatureRemove(feature) {
-    console.log(`onFeatureRemove: ${feature.name}`);
-    console.log(feature);
+    const features = clone(this.state.features);
+    remove(features, f => f._id === feature._id);
+    this.setState({features});
   }
 
   logout() {
