@@ -11,7 +11,8 @@ export default class LoginPage extends Component {
     this.state = {
       email: "",
       password: "",
-      error: null
+      error: null,
+      loading: false
     };
   }
 
@@ -31,17 +32,21 @@ export default class LoginPage extends Component {
 
     const {email, password} = this.state;
 
+    this.setState({loading: true, error: null});
+
     Auth.login(email, password)
       .then(() => this.props.history.push("/main"))
       .catch((err) => {
         // wrong email and/or password?
         // disp err msg
-        this.setState({error: 'Неверный адрес почты или пароль'});
+        this.setState({
+          error: 'Неверный адрес почты или пароль',
+          loading: false});
       });
   };
 
   render() {
-    const {error} = this.state;
+    const {error, loading} = this.state;
 
     return (
       <div className={style.loginSection}>
@@ -53,6 +58,7 @@ export default class LoginPage extends Component {
               type="email"
               value={this.state.email}
               onChange={this.handleChange}
+              disabled={loading}
             />
           </FormGroup>
           <FormGroup controlId="password" bsSize="large">
@@ -61,19 +67,25 @@ export default class LoginPage extends Component {
               value={this.state.password}
               onChange={this.handleChange}
               type="password"
+              disabled={loading}
             />
           </FormGroup>
           <Button
             block
             bsSize="large"
-            disabled={!this.validateForm()}
-            type="submit"
-          >
-            Login
+            disabled={!this.validateForm() || loading}
+            type="submit">
+            {loading ?
+              [
+                <span key="loading-text">Logging in... </span>,
+                <i className="fa fa-spinner fa-pulse fa-fw" key="loading-spinner"></i>
+              ]
+              : <span>Login</span>}
           </Button>
           {error ? <div className={style.errorMsg}>{error}</div> : null}
         </form>
       </div>
     );
   }
+
 }
