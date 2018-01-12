@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Auth from "../auth"
-import "./style.css";
+import style from "./style.css";
 
 
 export default class LoginPage extends Component {
@@ -10,7 +10,8 @@ export default class LoginPage extends Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      error: null
     };
   }
 
@@ -20,7 +21,8 @@ export default class LoginPage extends Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.id]: event.target.value
+      [event.target.id]: event.target.value,
+      error: null
     });
   };
 
@@ -34,14 +36,16 @@ export default class LoginPage extends Component {
       .catch((err) => {
         // wrong email and/or password?
         // disp err msg
-        console.log(err);
+        this.setState({error: 'Неверный адрес почты или пароль'});
       });
   };
 
   render() {
+    const {error} = this.state;
+
     return (
-      <div className="Login">
-        <form onSubmit={this.handleSubmit}>
+      <div className={style.loginSection}>
+        <form onSubmit={this.handleSubmit} className={style.loginForm}>
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
@@ -67,6 +71,7 @@ export default class LoginPage extends Component {
           >
             Login
           </Button>
+          {error ? <div className={style.errorMsg}>{error}</div> : null}
         </form>
       </div>
     );

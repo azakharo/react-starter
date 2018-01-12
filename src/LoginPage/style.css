@@ -1,8 +1,13 @@
-.Login {
+:local .loginSection {
   padding: 60px 0;
 }
 
-.Login form {
+:local .loginForm {
   margin: 0 auto;
   max-width: 320px;
+}
+
+:local .errorMsg {
+  margin-top: 1rem;
+  color: red;
 }
