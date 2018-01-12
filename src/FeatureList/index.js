@@ -1,7 +1,7 @@
 import {remove, clone, findIndex} from "lodash";
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {Button, Panel} from "react-bootstrap"
+import {Button, Panel, FormGroup, FormControl, ControlLabel} from "react-bootstrap"
 import RestApi from "../rest"
 import {subscribeFeatures, unsubscribeFeatures} from "../sockets";
 import style from "./style.css";
@@ -61,10 +61,29 @@ class FeatureList extends React.Component {
 
         {/*Add a new feature*/}
         <div className={style.addNewFeatureSection}>
-          <input type="text" className={`form-control ${style.addFeatureInput}`}
-                 onChange={this.onNewFeatureInputChanged.bind(this)} value={newFeature}/>
-          <Button bsStyle="primary" onClick={this.addFeature.bind(this)} disabled={!newFeature}>Add</Button>
 
+          {/*Add form*/}
+          <form onSubmit={this.addFeature.bind(this)}>
+            <FormGroup controlId="feature" className={style.inlineBlock}>
+              <ControlLabel>New feature:&nbsp;</ControlLabel>
+              <FormControl
+                autoFocus
+                type="text"
+                value={newFeature}
+                onChange={this.onNewFeatureInputChanged.bind(this)}
+                className={style.addFeatureInput}
+              />
+            </FormGroup>
+            <Button
+              bsStyle="primary"
+              className={style.inlineBlock}
+              disabled={!newFeature}
+              type="submit">
+              Add
+            </Button>
+          </form>
+
+          {/*Log out button*/}
           {isAuthed ?
             <Button bsStyle="default" className={style.logoutBtn} onClick={this.logout.bind(this)}>Logout</Button>
             : null}
