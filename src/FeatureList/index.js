@@ -63,7 +63,7 @@ class FeatureList extends React.Component {
         <div className={style.addNewFeatureSection}>
           <input type="text" className={`form-control ${style.addFeatureInput}`}
                  onChange={this.onNewFeatureInputChanged.bind(this)} value={newFeature}/>
-          <Button bsStyle="primary" onClick={this.addFeature.bind(this)}>Add</Button>
+          <Button bsStyle="primary" onClick={this.addFeature.bind(this)} disabled={!newFeature}>Add</Button>
 
           {isAuthed ?
             <Button bsStyle="default" className={style.logoutBtn} onClick={this.logout.bind(this)}>Logout</Button>
