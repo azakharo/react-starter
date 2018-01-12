@@ -98,7 +98,9 @@ class FeatureList extends React.Component {
     this.setState({newFeature: e.target.value});
   }
 
-  addFeature() {
+  addFeature(e) {
+    e.preventDefault();
+
     const {newFeature} = this.state;
 
     RestApi.postFeature(newFeature)
