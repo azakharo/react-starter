@@ -9,7 +9,7 @@ class RestApi {
 
   static getFeatures() {
     return new Promise((resolve, reject) => {
-      this.axi(`${BACKEND_URL}/api/things`)
+      this.axi('/api/things')
         .then(resp => resolve(resp.data))
         .catch(err => reject(err));
     });
@@ -18,7 +18,7 @@ class RestApi {
   // Returns auth token on success
   static login(username, password) {
     return new Promise((resolve, reject) => {
-      this.axi.post(`${BACKEND_URL}/auth/local`, {
+      this.axi.post('/auth/local', {
         email: username,
         password: password
       })
@@ -28,11 +28,11 @@ class RestApi {
   }
 
   static postFeature(feature) {
-    return this.axi.post(`${BACKEND_URL}/api/things`, {name: feature});
+    return this.axi.post('/api/things', {name: feature});
   }
 
   static remFeature(feature) {
-    return this.axi.delete(`${BACKEND_URL}/api/things/${feature._id}`);
+    return this.axi.delete(`/api/things/${feature._id}`);
   }
 
   static setAuthHeader(val) {
