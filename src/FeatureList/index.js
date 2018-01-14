@@ -14,7 +14,8 @@ class FeatureList extends React.Component {
     newFeature: "",
     features: null,
     loading: true,
-    error: null
+    error: null,
+    operIsInProgress: false
   };
 
   componentDidMount() {
@@ -43,7 +44,7 @@ class FeatureList extends React.Component {
   }
 
   render() {
-    const {newFeature, features, loading, error} = this.state;
+    const {newFeature, features, loading, error, operIsInProgress} = this.state;
     const isAuthed = Auth.isAuthenticated();
 
     return (
@@ -62,7 +63,8 @@ class FeatureList extends React.Component {
                     <Panel.Body>
                       <span>{feature.name}</span>
                       <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
-                              onClick={this.remFeature.bind(this, feature)}>
+                              onClick={this.remFeature.bind(this, feature)}
+                              disabled={operIsInProgress}>
                         <span className={`fa fa-times`}></span>
                       </button>
                     </Panel.Body>
@@ -95,7 +97,7 @@ class FeatureList extends React.Component {
             <Button
               bsStyle="primary"
               className={style.inlineBlock}
-              disabled={!newFeature}
+              disabled={!newFeature || operIsInProgress}
               type="submit">
               Add
             </Button>
@@ -121,18 +123,40 @@ class FeatureList extends React.Component {
 
     const {newFeature} = this.state;
 
+    this.setState({error: null, operIsInProgress: true});
+
     RestApi.postFeature(newFeature)
       .then(() => {
-        this.setState({newFeature: ""});
+        this.setState({
+          newFeature: "",
+          error: null,
+          operIsInProgress: false
+        });
       })
       .catch(err => {
+        this.setState({
+          error: err.toString(),
+          operIsInProgress: false
+        });
         console.log(err);
       });
   }
 
   remFeature(feature) {
+    this.setState({error: null, operIsInProgress: true});
+
     RestApi.remFeature(feature)
+      .then(() => {
+        this.setState({
+          error: null,
+          operIsInProgress: false
+        });
+      })
       .catch(err => {
+        this.setState({
+          error: err.toString(),
+          operIsInProgress: false
+        });
         console.log(err);
       });
   }
