@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap-theme.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import unregister from './registerServiceWorker';
+import {unregister} from './registerServiceWorker';
 import Routes from "./routes"
 
 ReactDOM.render(
