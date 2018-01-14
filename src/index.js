@@ -4,7 +4,6 @@ import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/css/bootstrap-theme.min.css";
 import "font-awesome/css/font-awesome.min.css";
-import registerServiceWorker from './registerServiceWorker';
 import Routes from "./routes"
 
 ReactDOM.render(
@@ -12,5 +11,3 @@ ReactDOM.render(
     <Routes/>
   </Router>,
   document.getElementById('root'));
-
-registerServiceWorker();
