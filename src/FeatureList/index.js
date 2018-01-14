@@ -12,16 +12,28 @@ class FeatureList extends React.Component {
 
   state = {
     newFeature: "",
-    features: null
+    features: null,
+    loading: true,
+    error: null
   };
 
   componentDidMount() {
+    this.setState({loading: true, error: null});
+
     RestApi.getFeatures()
       .then(features => {
-        this.setState({features});
+        this.setState({
+          features,
+          loading: false,
+          error: null
+        });
         subscribeFeatures(this.onFeatureSave.bind(this), this.onFeatureRemove.bind(this));
       })
       .catch(err => {
+        this.setState({
+          loading: false,
+          error: err.toString()
+        });
         console.log(err);
       });
   }
@@ -31,33 +43,39 @@ class FeatureList extends React.Component {
   }
 
   render() {
-    const {newFeature, features} = this.state;
+    const {newFeature, features, loading, error} = this.state;
     const isAuthed = Auth.isAuthenticated();
-
-    if (!features) {
-      return null;
-    }
 
     return (
       <div className={style.pageWrapper}>
+
+        {/*Loading indicator*/}
+        {loading ? <div className={style.loadingIndicator}>Loading...</div> : null}
+
         {/*Feature list*/}
-        <div className={style.featureList}>
-          {features.map((feature, featureInd) => {
-            return (
-              <div className={style.panelWrapper} key={`feature_${featureInd}`}>
-                <Panel>
-                  <Panel.Body>
-                    <span>{feature.name}</span>
-                    <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
-                            onClick={this.remFeature.bind(this, feature)}>
-                      <span className={`fa fa-times`}></span>
-                    </button>
-                  </Panel.Body>
-                </Panel>
-              </div>
-            );
-          })}
-        </div>
+        {features && features.length > 0 ?
+          <div className={style.featureList}>
+            {features.map((feature, featureInd) => {
+              return (
+                <div className={style.panelWrapper} key={`feature_${featureInd}`}>
+                  <Panel>
+                    <Panel.Body>
+                      <span>{feature.name}</span>
+                      <button className={`btn btn-danger btn-xs ${style.remFeatureBtn}`}
+                              onClick={this.remFeature.bind(this, feature)}>
+                        <span className={`fa fa-times`}></span>
+                      </button>
+                    </Panel.Body>
+                  </Panel>
+                </div>
+              );
+            })}
+          </div>
+          : null
+        }
+
+        {/*Error indicator*/}
+        {error ? <div className={style.errorIndicator}>Error: {error}</div> : null}
 
         {/*Add a new feature*/}
         <div className={style.addNewFeatureSection}>
