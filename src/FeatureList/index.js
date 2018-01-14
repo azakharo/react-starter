@@ -50,10 +50,12 @@ class FeatureList extends React.Component {
     return (
       <div className={style.pageWrapper}>
 
+        {/*Feature list*/}
+        {/*Caption*/}
+        <div className={style.featureListCaption}>Feature list</div>
         {/*Loading indicator*/}
         {loading ? <div className={style.loadingIndicator}>Loading...</div> : null}
-
-        {/*Feature list*/}
+        {/*Feature list content*/}
         {features && features.length > 0 ?
           <div className={style.featureList}>
             {features.map((feature, featureInd) => {
@@ -109,6 +111,10 @@ class FeatureList extends React.Component {
             : null}
 
         </div>
+
+        {/*socket upd hint*/}
+        <div className={style.testSocketHint}>To test data update via sockets open several tabs in the browser or open a different browser and try to change the data.</div>
+
 
       </div>
     );

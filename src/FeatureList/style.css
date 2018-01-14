@@ -5,6 +5,12 @@
   padding: 1rem;
 }
 
+:local .featureListCaption {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: x-large;
+}
+
 :local .featureList {
   display: flex;
   flex-direction: row;
@@ -46,9 +52,17 @@
 
 :local .loadingIndicator {
   font-size: large;
+  margin-bottom: 1rem;
 }
 
 :local .errorIndicator {
   font-size: large;
+  margin-bottom: 1rem;
   color: red;
+}
+
+:local .testSocketHint {
+  font-style: italic;
+  color: darkseagreen;
+  font-size: larger;
 }
