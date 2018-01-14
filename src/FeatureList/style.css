@@ -66,3 +66,11 @@
   color: darkseagreen;
   font-size: larger;
 }
+
+:local .linksSection {
+  margin-top: 1rem;
+}
+
+:local .linksCaption {
+  font-size: x-large;
+}

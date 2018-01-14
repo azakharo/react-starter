@@ -1,11 +1,11 @@
 import {remove, clone, findIndex} from "lodash";
 import React from "react";
-import {withRouter} from "react-router-dom";
 import {Button, Panel, FormGroup, FormControl, ControlLabel} from "react-bootstrap"
 import RestApi from "../rest"
 import {subscribeFeatures, unsubscribeFeatures} from "../sockets";
 import style from "./style.css";
 import Auth from "../auth";
+import {BACKEND_URL} from "../settings"
 
 
 class FeatureList extends React.Component {
@@ -115,6 +115,23 @@ class FeatureList extends React.Component {
         {/*socket upd hint*/}
         <div className={style.testSocketHint}>To test data update via sockets open several tabs in the browser or open a different browser and try to change the data.</div>
 
+        <div className={style.linksSection}>
+          <div className={style.linksCaption}>Links:</div>
+          <ul>
+            <li>
+              {/*API documentation link*/}
+              <a href={`${BACKEND_URL}/docs`} target="_blank" rel="noopener noreferrer">Swagger interactive API documentation</a>
+            </li>
+            <li>
+              {/*node-starter github repo link*/}
+              <a href="https://github.com/azakharo/node-starter" target="_blank" rel="noopener noreferrer">node-starter GitHub repo</a>
+            </li>
+            <li>
+              {/*react-starter github repo link*/}
+              <a href="https://github.com/azakharo/react-starter" target="_blank" rel="noopener noreferrer">This FrontEnd demo GitHub repo</a>
+            </li>
+          </ul>
+        </div>
 
       </div>
     );
@@ -192,4 +209,4 @@ class FeatureList extends React.Component {
 
 } // comp
 
-export default withRouter(FeatureList);
+export default FeatureList;
