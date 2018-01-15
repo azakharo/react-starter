@@ -13,6 +13,7 @@ class Routes extends React.PureComponent {
   }
 
   onHttpStatus401() {
+    Auth.logout();
     this.props.history.push("/login");
   }
 
