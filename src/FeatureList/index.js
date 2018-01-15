@@ -52,7 +52,7 @@ class FeatureList extends React.Component {
 
         {/*Feature list*/}
         {/*Caption*/}
-        <div className={style.featureListCaption}>Feature list</div>
+        <div className={style.featureListCaption}>node-starter feature list</div>
         {/*Loading indicator*/}
         {loading ? <div className={style.loadingIndicator}>Loading...</div> : null}
         {/*Feature list content*/}
@@ -128,7 +128,7 @@ class FeatureList extends React.Component {
             </li>
             <li>
               {/*react-starter github repo link*/}
-              <a href="https://github.com/azakharo/react-starter" target="_blank" rel="noopener noreferrer">This FrontEnd demo GitHub repo</a>
+              <a href="https://github.com/azakharo/react-starter" target="_blank" rel="noopener noreferrer">react-starter - this demo frontend's GitHub repo</a>
             </li>
           </ul>
         </div>
