@@ -8,6 +8,7 @@ import {unregister} from './registerServiceWorker';
 import Routes from "./routes"
 // Antd CSS imports
 import 'antd/lib/button/style/index.css';
+import 'antd/lib/style/index.css';
 
 
 ReactDOM.render(

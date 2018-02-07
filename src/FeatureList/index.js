@@ -2,6 +2,7 @@ import {remove, clone, findIndex} from "lodash";
 import React from "react";
 import {Button, Panel, FormGroup, FormControl, ControlLabel} from "react-bootstrap"
 import AntButton from 'antd/lib/button';
+import Icon from 'antd/lib/icon';
 import RestApi from "../rest"
 import {subscribeFeatures, unsubscribeFeatures} from "../sockets";
 import style from "./style.css";
@@ -136,6 +137,8 @@ class FeatureList extends React.Component {
         </div>
 
         <AntButton type="primary" size="large" onClick={this.onBtnClick.bind(this)}>Ant Button</AntButton>
+        <br/>
+        <Icon type="android" style={{ fontSize: 24, color: '#08c' }}/>
 
       </div>
     );
