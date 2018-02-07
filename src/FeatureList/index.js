@@ -1,6 +1,7 @@
 import {remove, clone, findIndex} from "lodash";
 import React from "react";
 import {Button, Panel, FormGroup, FormControl, ControlLabel} from "react-bootstrap"
+import AntButton from 'antd/lib/button';
 import RestApi from "../rest"
 import {subscribeFeatures, unsubscribeFeatures} from "../sockets";
 import style from "./style.css";
@@ -115,6 +116,7 @@ class FeatureList extends React.Component {
         {/*socket upd hint*/}
         <div className={style.testSocketHint}>To test data update via sockets open several tabs in the browser or open a different browser and try to change the data.</div>
 
+        {/* Links */}
         <div className={style.linksSection}>
           <div className={style.linksCaption}>Links:</div>
           <ul>
@@ -133,8 +135,14 @@ class FeatureList extends React.Component {
           </ul>
         </div>
 
+        <AntButton type="primary" size="large" onClick={this.onBtnClick.bind(this)}>Ant Button</AntButton>
+
       </div>
     );
+  }
+
+  onBtnClick() {
+    console.log('click');
   }
 
   onNewFeatureInputChanged(e) {
