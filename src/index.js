@@ -7,6 +7,9 @@ import "font-awesome/css/font-awesome.min.css";
 import {unregister} from './registerServiceWorker';
 import Routes from "./routes"
 
+// TODO upd to React 16.3
+// TODO add StrictMode
+
 ReactDOM.render(
   <Router>
     <Routes/>
